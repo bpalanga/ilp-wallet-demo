@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILP Digital Wallet Demo | Rafiki & Open Payments</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            ILP Wallet Demo
+        </div>
+        <div class="status-indicator">
+            <span>Rafiki Uplink:</span>
+            <div id="uplinkStatus" class="dot"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="card">
+            <div class="card-header">My Wallet</div>
+            <div class="card-body">
+                <div class="balance-display">
+                    <div class="balance-currency">Available Balance (XRP)</div>
+                    <div class="balance-amount" id="balanceDisplay">0.00</div>
+                </div>
+                <div id="paymentPointerContainer" style="display:none;">
+                    <div class="payment-pointer-box" id="paymentPointerVal">$ilp.demo/user/8f92a...</div>
+                </div>
+                <button id="btnInit" class="btn btn-primary">Initialize Wallet</button>
+                <button id="btnStream" class="btn btn-accent" disabled>Start Monetization Stream</button>
+                <button id="btnStopStream" class="btn btn-outline" style="display:none;">Stop Stream</button>
+                <div style="margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1rem;">
+                    <h4 style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Security Check</h4>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); display:flex; align-items:center; gap:5px;">
+                        <span id="signatureStatus">⚠ Not Active</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header">Network Topology & Packet Stream</div>
+            <div class="card-body network-viz">
+                <div class="node" id="nodeBrowser">
+                    <h4>Browser / WMP Extension</h4>
+                    <p>Source</p>
+                </div>
+                <div class="connection-line">
+                    <div class="line"></div>
+                    <div id="packet1" class="packet"></div>
+                </div>
+                <div class="node" id="nodeRafiki">
+                    <h4>Rafiki Node (Uplink)</h4>
+                    <p>ILP Router & Connector</p>
+                </div>
+                <div class="connection-line">
+                    <div class="line"></div>
+                    <div id="packet2" class="packet"></div>
+                </div>
+                <div class="node receiving" id="nodeWallet">
+                    <h4>Your Wallet (Ledger)</h4>
+                    <p>Receiver</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="tabs">
+                <div class="tab active" data-tab="logs">System Log</div>
+                <div class="tab" data-tab="transactions">Transactions</div>
+            </div>
+            <div class="card-body" id="tabContent">
+                <div id="viewLogs" class="log-container">
+                    <div class="log-entry"><span>SYS:</span> <span>Wallet standby. Waiting for initialization...</span></div>
+                </div>
+                <div id="viewTransactions" class="transaction-list" style="display: none;"></div>
+                <div id="sendPaymentForm" style="display: none; margin-top: 1rem; border-top: 1px solid #334155; padding-top: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Destination Payment Pointer</label>
+                        <input type="text" class="form-input" value="$wallet.example/alice" id="destPointer">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount (XRP)</label>
+                        <input type="number" class="form-input" value="10" id="sendAmount">
+                    </div>
+                    <button class="btn btn-primary" id="btnSendPayment">Generate Quote & Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast">Transaction Complete</div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
